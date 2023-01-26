@@ -1,5 +1,5 @@
-import { AzureFunction, Context } from '@azure/functions';
-import _ from 'lodash/fp';
+import type { AzureFunction, Context } from '@azure/functions';
+import { flow } from 'lodash/fp';
 
 export function error(status: string, response: string, message?: string) {
   throw new Error(JSON.stringify({ status, response, message }));
@@ -40,7 +40,7 @@ function exFlow<TFlow extends ExFlow<TFlow['middleware'], TFlow['payload']>>(
     const args = [context, payload, ...agrs];
 
     try {
-      await _.flow(middlewares)(args as TFlow['middleware']);
+      await flow(middlewares)(args as TFlow['middleware']);
     } catch (e: any) {
       const { status, response, message } = JSON.parse(e.message) as ErrorMessage;
       context.res = {
