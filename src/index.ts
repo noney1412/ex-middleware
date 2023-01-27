@@ -1,7 +1,7 @@
 import type { AzureFunction, Context } from '@azure/functions';
 import { flow } from 'lodash/fp';
 
-export function error(status: string, response: string, message?: string) {
+export function error(status: ErrorMessage['status'], response: ErrorMessage['response'], message?: ErrorMessage['message']) {
   throw new Error(JSON.stringify({ status, response, message }));
 }
 
@@ -26,7 +26,7 @@ export type ExFlow<TMiddleware, TPayload> = {
 };
 
 type ErrorMessage = {
-  status: string;
+  status: number;
   response: string;
   message?: string;
 };
