@@ -16,6 +16,7 @@ _docpress
 
 lib
 dist
+types
 tsconfig.tsbuildinfo
 
 # Visual Studio Code configs
