@@ -21,7 +21,7 @@ export type ExMiddleware<
 > = [Context, TPayload, T1, T2, T3, T4, T5, T6, T7];
 
 export type ExFlow<TMiddleware, TPayload> = {
-  middleware: TMiddleware;
+  middleware: TMiddleware | Promise<TMiddleware>;
   payload: TPayload;
 };
 
