@@ -43,10 +43,23 @@ function exFlow<TFlow extends ExFlow<TFlow['middleware'], TFlow['payload']>>(
       await flow(middlewares)(args as TFlow['middleware']);
     } catch (e: any) {
       const { status, response, message } = JSON.parse(e.message) as ErrorMessage;
-      context.res = {
-        status,
-        body: response,
-      };
+
+      const redirectCodes = [301, 302, 303, 304, 305, 307, 308];
+
+      if (redirectCodes.includes(status)) {
+        context.res = {
+          status,
+          headers: {
+            Location: response,
+          },
+        };
+      } else {
+        context.res = {
+          status,
+          body: response,
+        };
+      }
+
       context.log.error(message);
     }
   };
